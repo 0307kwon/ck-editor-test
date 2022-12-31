@@ -13,6 +13,7 @@ import Paragraph from "@ckeditor/ckeditor5-paragraph/src/paragraph";
 
 import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
 import { ButtonView } from "@ckeditor/ckeditor5-ui";
+import Abbreviation from "./abbrivation/abbreviation";
 
 class Timestamp extends Plugin {
   init() {
@@ -42,7 +43,16 @@ class Timestamp extends Plugin {
 }
 
 ClassicEditor.create(document.querySelector("#editor"), {
-  plugins: [Essentials, Paragraph, Heading, List, Bold, Italic, Timestamp],
+  plugins: [
+    Essentials,
+    Paragraph,
+    Heading,
+    List,
+    Bold,
+    Italic,
+    Timestamp,
+    Abbreviation,
+  ],
   toolbar: [
     "heading",
     "bold",
@@ -50,6 +60,7 @@ ClassicEditor.create(document.querySelector("#editor"), {
     "numberedList",
     "bulletedList",
     "timestamp",
+    "abbreviation",
   ],
 })
   .then((editor) => {
