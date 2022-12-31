@@ -11,9 +11,46 @@ import Heading from "@ckeditor/ckeditor5-heading/src/heading";
 import List from "@ckeditor/ckeditor5-list/src/list";
 import Paragraph from "@ckeditor/ckeditor5-paragraph/src/paragraph";
 
+import Plugin from "@ckeditor/ckeditor5-core/src/plugin";
+import { ButtonView } from "@ckeditor/ckeditor5-ui";
+
+class Timestamp extends Plugin {
+  init() {
+    console.log("Timestamp was initialized.");
+    const editor = this.editor;
+    editor.ui.componentFactory.add("timestamp", () => {
+      const button = new ButtonView();
+
+      button.set({
+        label: "Timestamp",
+        withText: true,
+      });
+
+      button.on("execute", () => {
+        const now = new Date();
+
+        editor.model.change((writer) => {
+          editor.model.insertContent(
+            writer.createText("timestamp: " + now.toString())
+          );
+        });
+      });
+
+      return button;
+    });
+  }
+}
+
 ClassicEditor.create(document.querySelector("#editor"), {
-  plugins: [Essentials, Paragraph, Heading, List, Bold, Italic],
-  toolbar: ["heading", "bold", "italic", "numberedList", "bulletedList"],
+  plugins: [Essentials, Paragraph, Heading, List, Bold, Italic, Timestamp],
+  toolbar: [
+    "heading",
+    "bold",
+    "italic",
+    "numberedList",
+    "bulletedList",
+    "timestamp",
+  ],
 })
   .then((editor) => {
     console.log("Editor was initialized", editor);
